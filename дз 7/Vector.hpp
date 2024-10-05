@@ -13,18 +13,22 @@ class Vector
 public:
     Vector();
     ~Vector();
-    Vector(const Vector& obj);
+    Vector(const Vector & obj);
 
     Vector(int s);
     void InputRand();
-    void Print();
+    void Print(); 
 
     void PushBack(int a);
     int PopBack();
 
+    // Перегрузка операторов
     Vector operator-(int a);
-    Vector operator+(int a);
-    Vector operator+(const Vector& other);
-    Vector operator*(int scalar);
+    Vector& operator++();
+    Vector operator++(int);
+    Vector& operator--();
+    Vector operator--(int);
+    Vector& operator+=(int a);
+    Vector& operator-=(int a);
+    Vector& operator*=(int a);
 };
-
