@@ -6,142 +6,49 @@
 //
 
 #include "Vector.hpp"
-#include<iostream>
+#include <iostream>
+
 using namespace std;
 
-Vector::Vector()
+Vector::Vector() : arr(nullptr), size(0) {}
+
+Vector::Vector(int s) : size(s)
 {
-    arr = nullptr;
-    size = 0;
-}
-Vector::Vector(int s)
-{
-    size = s;
     arr = new int[size] {0};
 }
+
 Vector::~Vector()
 {
-    cout << "Деструктор\n";
-    delete[]arr;
-    size = 0;
-    
+    delete[] arr;
 }
-Vector::Vector(const Vector& obj)
-{
-    cout << "Конструктор копирования\n";
-    size = obj.size;
-    arr = new int[size];
-    for (int i = 0; i < size; i++)
-    {
-        arr[i] = obj.arr[i];
-    }
-}
+
 void Vector::InputRand()
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
     {
-        arr[i] = rand()%41 - 20; // [-20 +20]
+        arr[i] = rand() % 41 - 20; // [-20, 20]
     }
 }
+
 void Vector::Print()
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
     {
-        cout << arr[i] << "\t";
+        cout << arr[i] << " ";
     }
-    cout << "\n---------------------------------------------------\n";
-}
-
-void Vector::PushBack(int a)
-{
-    int* temp = new int[size + 1];
-
-    for (int i = 0; i < size; i++)
-    {
-        temp[i] = arr[i];
-    }
-    temp[size] = a;
-
-    delete[] arr;
-
-    arr = temp;
-    size++;
-}
-
-int Vector::PopBack()
-{
-    int* temp = new int[size - 1];
-    for (int i = 0; i < size - 1; i++)
-    {
-        temp[i] = arr[i];
-    }
-    int el = arr[size - 1]; 
-
-    delete[] arr;
-    arr = temp;
-    size--;
-
-    return el;
-}
-
-Vector Vector::operator-(int a)
-{
-    Vector rez(size - a); // 5 - 2 = 3
-    for (int i = 0; i < rez.size; i++)
-    {
-        rez.arr[i] = arr[i];
-    }
-    return rez;
-}
-
-Vector& Vector::operator++()
-{
-    for (int i = 0; i < size; i++)
-    {
-        arr[i]++;
-    }
-    return *this;
-}
-
-Vector Vector::operator++(int)
-{
-    Vector temp = *this;
-    for (int i = 0; i < size; i++)
-    {
-        arr[i]++;
-    }
-    return temp;
-}
-
-Vector& Vector::operator--()
-{
-    for (int i = 0; i < size; i++)
-    {
-        arr[i]--;
-    }
-    return *this;
-}
-
-Vector Vector::operator--(int)
-{
-    Vector temp = *this;
-    for (int i = 0; i < size; i++)
-    {
-        arr[i]--;
-    }
-    return temp;
+    cout << endl;
 }
 
 Vector& Vector::operator+=(int a)
 {
     int* temp = new int[size + a];
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
     {
         temp[i] = arr[i];
     }
-    for (int i = size; i < size + a; i++)
+    for (int i = size; i < size + a; ++i)
     {
-        temp[i] = 0; 
+        temp[i] = 0; // Добавляем нули
     }
     delete[] arr;
     arr = temp;
@@ -154,7 +61,7 @@ Vector& Vector::operator-=(int a)
     if (size >= a)
     {
         int* temp = new int[size - a];
-        for (int i = 0; i < size - a; i++)
+        for (int i = 0; i < size - a; ++i)
         {
             temp[i] = arr[i];
         }
@@ -164,16 +71,42 @@ Vector& Vector::operator-=(int a)
     }
     else
     {
-        cout << "Ошибка: недостаточно элементов для вычитания\n";
+        cout << "Ошибка: недостаточно элементов для уменьшения.\n";
     }
     return *this;
 }
 
 Vector& Vector::operator*=(int a)
 {
-    for (int i = 0; i < size; i++)
+    for (int i = 0; i < size; ++i)
     {
         arr[i] *= a;
     }
     return *this;
 }
+
+Vector operator-(int a, const Vector& vec)
+{
+    if (a >= vec.size)
+    {
+        cout << "Ошибка: недостаточно элементов для операции.\n";
+        return Vector(0);
+    }
+    Vector result(vec.size - a);
+    for (int i = 0; i < result.size; ++i)
+    {
+        result.arr[i] = vec.arr[i + a];
+    }
+    return result;
+}
+
+ostream& operator<<(ostream& os, const Vector& vec)
+{
+    for (int i = 0; i < vec.size; ++i)
+    {
+        os << vec.arr[i] << " ";
+    }
+    os << endl;
+    return os;
+}
+

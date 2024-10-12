@@ -5,52 +5,33 @@
 //  Created by Егор Джемлиханов on 29.09.2024.
 //
 
-#include<iostream>
-#include"Vector.hpp"
+#include <iostream>
+#include "Vector.hpp"
+
 using namespace std;
 
 int main()
 {
-    srand(time(0));
-
-    Vector obj1(5); //-------------  1 2 3 4 5
+    Vector obj1(5);
     obj1.InputRand();
-    obj1.Print();
+    cout << "Вектор obj1: ";
+    cout << obj1;
 
-    Vector obj3 = obj1 - 2;// 1 2 3
-    obj3.Print();
-    obj1.Print();
+    obj1 += 5;
+    cout << "После obj1 += 5: ";
+    cout << obj1;
 
-    
-     
-//      Vector obj4 = ++obj1; // obj4 = 0 1 2 3 4 5   obj1 = 0 1 2 3 4 5
-//      Vector obj5 = obj1++; // obj5 = 1 2 3 4 5     obj1 = 0 1 2 3 4 5
-//      Vector obj6(3); // 1 2 3
-//      obj6+=5; // 1 2 3 0 0 0 0 0
-//      obj6-=5; // Нужно проверить условия перед вычитанием 5 элементов. Размер >=5, иначе возникнет ошибка
-//      obj6*=5; // Увеличивает все элементы на 5
-    
-    
-    Vector obj4 = ++obj1;
-    obj4.Print();
-    obj1.Print();
+    obj1 -= 3;
+    cout << "После obj1 -= 3: ";
+    cout << obj1;
 
-    Vector obj5 = obj1++;
-    obj5.Print();
-    obj1.Print();
+    obj1 *= 2;
+    cout << "После obj1 *= 2: ";
+    cout << obj1;
 
-    Vector obj6(3);
-    obj6.InputRand();
-    obj6.Print();
-    
-    obj6 += 5;
-    obj6.Print();
-
-    obj6 -= 5;
-    obj6.Print();
-
-    obj6 *= 5;
-    obj6.Print();
+    Vector obj2 = 2 - obj1; 
+    cout << "Новый вектор obj2 = 2 - obj1: ";
+    cout << obj2;
 
     return 0;
 }

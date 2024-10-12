@@ -6,29 +6,28 @@
 //
 
 #pragma once
+#include <iostream>
+using namespace std;
+
 class Vector
 {
     int* arr;
     int size;
+
 public:
     Vector();
-    ~Vector();
-    Vector(const Vector & obj);
-
     Vector(int s);
+    ~Vector();
+    
+   
     void InputRand();
-    void Print(); 
+    void Print();
 
-    void PushBack(int a);
-    int PopBack();
-
-    // Перегрузка операторов
-    Vector operator-(int a);
-    Vector& operator++();
-    Vector operator++(int);
-    Vector& operator--();
-    Vector operator--(int);
+    
     Vector& operator+=(int a);
     Vector& operator-=(int a);
     Vector& operator*=(int a);
+    
+    friend Vector operator-(int a, const Vector& vec);
+    friend ostream& operator<<(ostream& os, const Vector& vec);
 };
